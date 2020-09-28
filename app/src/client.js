@@ -3,7 +3,7 @@ const ipc = require('node-ipc');
 ipc.config.id = 'app';
 ipc.config.retry = 1500;
 
-ipc.connectToNet(
+ipc.connectTo(
   'sidecar',
   function () {
     ipc.of.sidecar.on(
