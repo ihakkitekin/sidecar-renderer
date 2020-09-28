@@ -5,7 +5,7 @@ const port = 3000;
 const app = express();
 
 app.get('/', async (req, res) => {
-  const data = await client.sendMessageToSidecar({ name: 'Stream' });
+  const data = await client.sendMessageToSidecar({ name: req.query.name || 'World' });
 
   res.send(data);
 })

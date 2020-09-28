@@ -9,7 +9,7 @@ ipc.config.id = 'sidecar';
 ipc.config.retry = 1500;
 ipc.config.maxConnections = 1;
 
-ipc.serve(
+ipc.serveNet(
   function () {
     ipc.server.on(
       'message',
