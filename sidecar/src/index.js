@@ -1,3 +1,3 @@
-const server = require('./server');
+const { server } = require('./server');
 
-server.start();
+server.listen(8087, () => console.log('Listening sidecar on http://localhost:8087'));

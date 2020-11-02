@@ -1,42 +1,30 @@
-const ipc = require('node-ipc');
 const client = require('./__client/server.bundle');
 
 function renderClient(props) {
   return client.serverRender(props);
 }
 
-ipc.config.id = 'sidecar';
-ipc.config.retry = 1500;
-ipc.config.maxConnections = 1;
+const express = require('express');
 
-ipc.serve(
-  function () {
-    ipc.server.on(
-      'message',
-      function (data, socket) {
-        const html = renderClient(data);
-        ipc.server.emit(
-          socket,
-          'message',
-          html
-        );
-      }
-    );
+const server = express();
 
-    ipc.server.on(
-      'socket.disconnected',
-      function (data, socket) {
-        console.log('DISCONNECTED\n\n', arguments);
-      }
-    );
+server.use(express.json());
+
+server.post('/', (req, res) => {
+  res.send(renderClient(req.body));
+});
+
+server.use((err, req, res, next) => {
+  console.error(err.message);
+
+  if (res.headersSent) {
+    next(err);
   }
-);
 
-ipc.server.on(
-  'error',
-  function (err) {
-    ipc.log('Got an ERROR!', err);
-  }
-);
+  res.status(500).send(err.message);
+});
 
-module.exports = ipc.server;
+
+module.exports = {
+  server
+};
