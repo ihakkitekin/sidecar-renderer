@@ -2,7 +2,7 @@ const got = require('got');
 
 function SidecarClient() { }
 
-SidecarClient.prototype.get = async function (data) {
+SidecarClient.prototype.render = async function (data) {
   try {
     const response = got.post('http://localhost:8087', {
       json: data

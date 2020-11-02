@@ -5,7 +5,7 @@ const port = 3000;
 const app = express();
 
 app.get('/', async (req, res) => {
-  const data = await client.get({ name: req.query.name || 'World' });
+  const data = await client.render({ name: req.query.name || 'World' });
 
   res.send(data);
 })
